@@ -164,12 +164,8 @@ class Burner():
 
     #--------------------------------------------------------------------
     def cdIsWritable(self):
-        os.system("cdrskin --tell_media_space >" + self.burnlog + " 2>" + self.burnlog)
-        if not os.path.isfile(self.burnlog): return
-        log = open(self.burnlog)
-        lines = log.readlines()
-        log.close()
-        os.unlink(self.burnlog)
+        cdrskin = Popen(["cdrskin", "--tell_media_space"], stderr=PIPE, stdout=PIPE)
+        lines = "".join(cdrskin.communicate()).split("\n")
         try:
             return (True,int(lines[0].strip())) # *2048)/(1024*1024)
         except Exception, e:
