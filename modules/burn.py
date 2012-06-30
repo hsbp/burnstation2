@@ -3,7 +3,7 @@
 import re
 import os
 import functions
-from subprocess import Popen
+from subprocess import Popen, call
 
 
 logPath=os.path.join(functions.install_dir(), "log")
@@ -181,7 +181,7 @@ class Burner():
         return (None,"")
 
     def BlankCD(self):
-        os.system("cdrskin blank=as_needed")
+        call(["cdrskin", "blank=as_needed"])
         #os.system("cdrskin blank=as_needed 2>" + self.burnlog)
         #log = open(self.burnlog)
         #lines = log.readlines()
