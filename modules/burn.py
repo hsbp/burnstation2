@@ -60,16 +60,11 @@ class Decoder:
             logger.error("Decoding failed: %s not found" % filename)
             return False
 
-        mp3count = 0
-        if (filename[-4:].lower() == ".mp3"):
-            mp3count = mp3count + 1
-
         # Check whether mpg123 and oggdec exists
         mpg123_command = "/usr/bin/mpg123"
-        if (mp3count > 0):
-            if (filename[-4:].lower() == ".mp3"):
-                command = [mpg123_command, '--stereo', '-w', target, filename]
-                (result, (stdout_output, stderr_output)) = cmdexec(command)
+        if filename.lower().endswith(".mp3"):
+            command = [mpg123_command, '--stereo', '-w', target, filename]
+            (result, (stdout_output, stderr_output)) = cmdexec(command)
             #logger.info("res: %s, output\n%s\n%s" % (result, "\n".join(stdout_output), "\n".join(stderr_output)))
             logger.debug("res: %s" % (result))
 
