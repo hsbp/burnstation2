@@ -2,7 +2,7 @@
 
 import re, sys
 import os, os.path
-import mp3info, ogg.vorbis, functions
+import ogg.vorbis, functions
 from subprocess import Popen
 
 
@@ -68,11 +68,6 @@ class Decoder:
         mpg123_command = "/usr/bin/mpg123"
         if (mp3count > 0):
             if (filename[-4:].lower() == ".mp3"):
-                # Make sure that conversion is done with the correct sample rate
-                file = open(filename, "rb")
-                mpeg3info = mp3info.MP3Info(file)
-                file.close()
-                samplerate = mpeg3info.mpeg.samplerate
                 command = [mpg123_command, '--stereo', '-w', target, filename]
                 (result, (stdout_output, stderr_output)) = cmdexec(command)
             #logger.info("res: %s, output\n%s\n%s" % (result, "\n".join(stdout_output), "\n".join(stderr_output)))
