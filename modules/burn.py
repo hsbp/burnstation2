@@ -3,7 +3,7 @@
 import re
 import os
 import functions
-from subprocess import Popen, call
+from subprocess import Popen, call, PIPE
 
 
 logPath=os.path.join(functions.install_dir(), "log")
@@ -26,7 +26,7 @@ logger=Logger()
 def cmdexec(cmd):
     """ Executes a command in a subshell and returns (return_value, (stdout, stderr)). """
 
-    process = Popen(cmd)
+    process = Popen(cmd, stdout=PIPE, stderr=PIPE)
 
     # wait until the sub process has finished
     output = process.communicate()
