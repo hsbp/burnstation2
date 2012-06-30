@@ -39,11 +39,13 @@ class BurnLayout(gtk.Layout):
         self.pyjama.window.tvList.clear()
         self.pyjama.window.toolbar.lbMoreAlbumsFromThisArtist2.hide()
         self.pyjama.window.toolbar.lbAppendAlbum.hide()
+        self.pyjama.window.toolbar.lbArtistsAlbumsToPlaylist.hide()
+        self.pyjama.window.toolbar.Separator2.hide()
         self.pyjama.window.TVListFrame.get_label_widget().set_markup("")
         self.table = gtk.HBox(True)
         self.table.set_size_request(800, 400)
         self.table.set_border_width(25)
-        self.table.set_spacing(50)
+        self.table.set_spacing(30)
 
         self.put(self.table, 0, 0)
 
@@ -119,7 +121,10 @@ class BurnLayout(gtk.Layout):
             response=dialog.run() # gtk.RESPONSE_NONE,
             dialog.destroy()
             if response in [-2,-4]:
-                del self.pyjama.mediaSize
+                try:
+                    del self.pyjama.mediaSize
+                except:
+                    pass
                 return
             if response == -10:
                 self.blankCD()
@@ -217,14 +222,14 @@ class BurnCDLayout(gtk.Layout):
         if length<mediaLength:
             #print "can write as AUDIO"
             self.bAudio.set_sensitive(True)
-            self.lWarning.hide()
+            #self.lWarning.hide()
         else:
             self.bAudio.set_sensitive(False)
         if size<=self.pyjama.mediaSize*2048:
             # write data
             #print "can write as DATA"
             self.bData.set_sensitive(True)
-            self.lWarning.hide()
+            #self.lWarning.hide()
         else:
             self.bData.set_sensitive(False)
             # remove items from list in order to proceed.
@@ -232,7 +237,7 @@ class BurnCDLayout(gtk.Layout):
             #print "music overload"
             self.bAudio.hide(True)
             self.bData.hide(True)
-            self.lWarning.show()
+            #self.lWarning.show()
 
     def updateStatus(self):
         while not self.burner.Finished:
@@ -329,7 +334,10 @@ class BurnCDLayout(gtk.Layout):
                                     msg)
         dialog.run() # gtk.RESPONSE_NONE,
         dialog.destroy()
-        del self.pyjama.mediaSize
+        try:
+            del self.pyjama.mediaSize
+        except:
+            pass
         self.pyjama.layouts.show_layout("burn", 0, 0)
 
     def on_bData_activated(self, ev):
@@ -346,8 +354,9 @@ class BurnCDLayout(gtk.Layout):
         self.pyjama.window.tvList.clear()
         self.pyjama.window.toolbar.lbMoreAlbumsFromThisArtist2.hide()
         self.pyjama.window.toolbar.lbAppendAlbum.hide()
+        self.pyjama.window.toolbar.Separator2.hide()
         self.table = gtk.HBox(True)
-        self.table.set_size_request(800, 400)
+        self.table.set_size_request(700, 350)
         self.table.set_border_width(25)
         self.table.set_spacing(30)
 
@@ -375,7 +384,7 @@ class BurnCDLayout(gtk.Layout):
 
         #self.lWarning = gtk.Label()
         #self.lWarning.set_markup(_("<b>Rock'n'Roll overload</b>\nToo many tracks on playlist, please remove some to continue burning."))
-        #self.table.pack_end(self.lWarning, True, True, 0)
+       #self.table.pack_end(self.lWarning, True, True, 0)
 
         self.put(self.table, 0, 0)
         self.show_all()
@@ -402,6 +411,7 @@ class BurnUSBLayout(gtk.Layout):
         self.pyjama.window.tvList.clear()
         self.pyjama.window.toolbar.lbMoreAlbumsFromThisArtist2.hide()
         self.pyjama.window.toolbar.lbAppendAlbum.hide()
+        self.pyjama.window.toolbar.lbArtistsAlbumsToPlaylist.hide()
         # draw the burn-cd dialog
 
         self.put(combo, 0, 0)
