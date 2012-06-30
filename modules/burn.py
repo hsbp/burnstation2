@@ -45,13 +45,11 @@ class Decoder:
         """walk files list and apply decode() to each"""
 
         res=[]
-        i = 0
-        for source in files:
+        for i, source in enumerate(files):
             target = targetPath + "/" + str(i) + ".wav"
             logger.info("Decoding %s to %s ..." % (source, target))
             self.decode(source, target)
             res.append(target)
-            i += 1
 
         logger.info("Decoding finished")
         return res
