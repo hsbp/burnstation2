@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import re, sys
-import os, os.path
-import ogg.vorbis, functions
+import re
+import os
+import functions
 from subprocess import Popen
 
 
