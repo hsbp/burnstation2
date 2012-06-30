@@ -46,7 +46,7 @@ class Decoder:
 
         res=[]
         for i, source in enumerate(files):
-            target = targetPath + "/" + str(i) + ".wav"
+            target = os.path.join(targetPath, "{0}.wav".format(i))
             logger.info("Decoding %s to %s ..." % (source, target))
             self.decode(source, target)
             res.append(target)
