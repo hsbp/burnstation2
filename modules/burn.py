@@ -3,11 +3,7 @@
 import re, sys
 import os, os.path
 import mp3info, ogg.vorbis, functions
-from string import replace
-from popen2 import popen3
-from time import sleep
-if (sys.platform != "win32"):
-    from popen2 import Popen3
+from subprocess import Popen
 
 
 logPath=os.path.join(functions.install_dir(), "log")
@@ -30,30 +26,15 @@ logger=Logger()
 def cmdexec(cmd):
     """ Executes a command in a subshell and returns (return_value, (stdout, stderr)). """
 
-    my_popen3 = Popen3(cmd, True)
+    process = Popen(cmd)
 
     # wait until the sub process has finished
-    while (my_popen3.poll() == -1):
-        sleep(0.01)
-
-    stderr_output = my_popen3.fromchild.readlines()
-    stdout_output = my_popen3.childerr.readlines()
+    output = process.communicate()
 
     # read the result value
-    result = my_popen3.poll()
-    if (my_popen3.fromchild != None):
-        my_popen3.fromchild.close()
-    if (my_popen3.childerr != None):
-        my_popen3.childerr.close()
-    if (my_popen3.tochild != None):
-        my_popen3.tochild.close()
+    result = process.returncode
 
-    return (result, (stdout_output, stderr_output))
-
-def escapedfilename(filename):
-    """ escapes special characters in filenames (currently "`") """
-    filename = replace(filename, "`", "\`")
-    return filename
+    return (result, output)
 
 class Decoder:
     def __init__(self):
@@ -94,8 +75,8 @@ class Decoder:
                 mpeg3info = mp3info.MP3Info(file)
                 file.close()
                 samplerate = mpeg3info.mpeg.samplerate
-                command = "(%s --stereo -w \"%s\" \"%s\") 2>&1" % (mpg123_command, escapedfilename(target), escapedfilename(filename))
-            (result, (stdout_output, stderr_output)) = cmdexec(command)
+                command = [mpg123_command, '--stereo', '-w', target, filename]
+                (result, (stdout_output, stderr_output)) = cmdexec(command)
             #logger.info("res: %s, output\n%s\n%s" % (result, "\n".join(stdout_output), "\n".join(stderr_output)))
             logger.debug("res: %s" % (result))
 
