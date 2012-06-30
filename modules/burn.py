@@ -78,9 +78,7 @@ class Decoder:
             #logger.info("res: %s, output\n%s\n%s" % (result, "\n".join(stdout_output), "\n".join(stderr_output)))
             logger.debug("res: %s" % (result))
 
-            if (result != 0):
-                return False
-            else: return True
+            return result == 0
 
 class Burner():
     def __init__(self):
