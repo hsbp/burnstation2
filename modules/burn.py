@@ -152,8 +152,6 @@ class Burner():
         # if there is no CD, do not start burning
         if not self.cdIsWritable()[0]: return
 
-        track_count = len(tracks)
-
         if mode == 'AUDIO':
             self.decoding = True
             t=Decoder().convert2wav(tracks,tmpPath)
@@ -207,7 +205,6 @@ class Burner():
         cdrecord_cmd_args += ' -eject'
         #-----------------------------------------------------------
         if mode == 'AUDIO':
-            count = len(tracks)
             tracks_list = " ".join(tracks)
             cdrecord_cmd = "(cdrskin %s -sao -swab -pad %s) " % (cdrecord_cmd_args, tracks_list)
             logger.info("Executing cdrecord with the following options: %s" % cdrecord_cmd)
