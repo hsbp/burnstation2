@@ -164,7 +164,7 @@ class Burner():
 
     #--------------------------------------------------------------------
     def cdIsWritable(self):
-        status = os.system("cdrskin --tell_media_space >" + self.burnlog + " 2>" + self.burnlog)
+        os.system("cdrskin --tell_media_space >" + self.burnlog + " 2>" + self.burnlog)
         if not os.path.isfile(self.burnlog): return
         log = open(self.burnlog)
         lines = log.readlines()
@@ -229,7 +229,7 @@ class Burner():
 
             cdrecord_cmd = "cdrskin %s -eject -data %s" % (cdrecord_cmd_args, ISOfile)
             logger.debug("* Running cdrskin: %s" % cdrecord_cmd)
-            CdrecordStatus = os.system(cdrecord_cmd + " > " + logPath + "/burn.log 2> " + logPath + "/burn.err")
+            os.system(cdrecord_cmd + " > " + logPath + "/burn.log 2> " + logPath + "/burn.err")
 
 if __name__ == "__main__":
     a=Burner()
