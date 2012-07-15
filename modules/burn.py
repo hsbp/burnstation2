@@ -168,7 +168,7 @@ class Burner():
         lines = "".join(cdrskin.communicate()).split("\n")
         try:
             return (True,int(lines[0].strip())) # *2048)/(1024*1024)
-        except Exception, e:
+        except Exception:
             pass
         for line in lines:
             m=RE.search(line)
@@ -204,7 +204,7 @@ class Burner():
             tracks_list = " ".join(tracks)
             cdrecord_cmd = "(cdrskin %s -sao -swab -pad %s) " % (cdrecord_cmd_args, tracks_list)
             logger.info("Executing cdrecord with the following options: %s" % cdrecord_cmd)
-            CdrecordStatus = os.system(cdrecord_cmd + " > " + logPath + "/burn.log 2> " + logPath + "/burn.err")
+            os.system(cdrecord_cmd + " > " + logPath + "/burn.log 2> " + logPath + "/burn.err")
         elif mode == 'DATA':
             # join tracks array for command line
             tracks_list = '"' + '" "'.join(tracks) + '"'
