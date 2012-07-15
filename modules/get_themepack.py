@@ -18,7 +18,6 @@
 # ----------------------------------------------------------------------------
 
 import os
-from time import time
 import functions
 
 # Gettext - Übersetzung

@@ -22,8 +22,6 @@
 # to download and extract an image pack
 
 import os
-from time import time
-
 import functions
 
 # Gettext - Übersetzung

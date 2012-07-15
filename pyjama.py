@@ -25,7 +25,7 @@ import gtk
 # this line kills gtkmozembed when a flash plugin is installed
 gtk.gdk.threads_init()
 # Time formatting
-from time import strftime, gmtime, time, sleep
+from time import gmtime, time, sleep
 # Option Parser
 from optparse import OptionParser, OptionGroup
 # Fehlerverfolgung
